@@ -1,0 +1,41 @@
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define the range for x1 and x2
+x1_values = np.linspace(0, 15, 400)
+
+# Constraint lines
+# Line for 3x1 + 2x2 = 36 -> x2 = (36 - 3x1) / 2
+x2_line1 = (36 - 3 * x1_values) / 2
+# Line for 3x1 + 4x2 = 24 -> x2 = (24 - 3x1) / 4
+x2_line2 = (24 - 3 * x1_values) / 4
+
+# Set up the plot
+plt.figure(figsize=(10, 8))
+plt.plot(x1_values, x2_line1, label=r"$3x_1 + 2x_2 = 36$", color="blue")
+plt.plot(x1_values, x2_line2, label=r"$3x_1 + 4x_2 = 24$", color="green")
+
+# Fill the feasible region
+plt.fill_between(x1_values, 0, x2_line1, where=(x2_line1 >= 0) & (x1_values <= 12), color="blue", alpha=0.3)
+plt.fill_between(x1_values, x2_line2, 20, where=(x2_line2 >= 0) & (x1_values <= 8), color="green", alpha=0.3)
+
+# Define feasible points to highlight
+feasible_points_x = [0, 12, 0, 8]
+feasible_points_y = [18, 0, 6, 0]
+
+# Plot feasible points
+plt.scatter(feasible_points_x, feasible_points_y, color="red", zorder=5)
+for x, y in zip(feasible_points_x, feasible_points_y):
+    plt.text(x, y, f"({x}, {y})", fontsize=12, verticalalignment='bottom', horizontalalignment='right')
+
+# Labels and Limits
+plt.xlabel(r"$x_1$")
+plt.ylabel(r"$x_2$")
+plt.title("Feasible Region for Constraints")
+plt.xlim(0, 15)
+plt.ylim(0, 20)
+plt.legend()
+
+# Show the plot
+plt.grid(True)
+plt.show()
